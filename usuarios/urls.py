@@ -20,5 +20,5 @@ urlpatterns = [
     path('delete_comment/<int:comment_id>/', views.delete_comment, name='delete_comment'),
     path('perfil/<int:user_id>/', views.perfil, name='perfil'),
     path('perfil/editar/<int:user_id>/', views.editar_perfil, name='editar_perfil'),
-
+    path('graficos', views.graficos, name="graficos")
 ]

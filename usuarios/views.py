@@ -6,7 +6,8 @@ from django.contrib.auth import authenticate, login as login_django
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from .models import Post, Respostas, Pessoa,  Disciplina
-
+from django.contrib import messages
+from django.db.models import Count
 
 def cadastro(request):
     if request.method == 'GET':
@@ -62,7 +63,8 @@ def login(request):
             return redirect('feed')
         
         else:
-            return HttpResponse('Email ou senha inválidos')
+            messages.error(request, 'Login ou senha inválidos')
+            return redirect('auth:login')
         
 def Deslogar(request):
     logout(request)
@@ -86,6 +88,22 @@ def Feed(request):
 
     }
     return render(request, 'feed2.html', context)
+
+
+def graficos(request):
+    # Busca todas as disciplinas e conta o número de posts associados a cada uma
+    disciplinas_com_postagens = Disciplina.objects.annotate(num_posts=Count('posts')).order_by('-num_posts')
+    
+    # Prepara os dados para o gráfico
+    dados_grafico = [{'category': disciplina.nome, 'value': disciplina.num_posts} for disciplina in disciplinas_com_postagens]
+    
+    # Passa os dados e as disciplinas para o template
+    context = {
+        'dados_grafico': dados_grafico,
+        'disciplinas': Disciplina.objects.all(),  # Isso garantirá que a sidebar tenha as disciplinas listadas
+    }
+    
+    return render(request, 'graficos.html', context)
 
 
 

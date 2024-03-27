@@ -87,15 +87,23 @@
         <h2>Conecte-se e compartilhe com as pessoas da sua instituição.</h2>
         <form action="{% url 'auth:login' %}" method="POST"> 
             {% csrf_token %}
-            <input type="text" class="form-control" id="username" name="username">
+            <input type="text" class="form-control" id="username" name="username" required>
             <input type="password" name="senha" placeholder="senha" required>
+            {% if messages %}
+            <ul class="messages">
+              {% for message in messages %}
+               <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+              {% endfor %}
+           </ul>
+            {% endif %}   
             <button type="submit" class="btn btn-primary btn-block">Entrar</button>
         </form>
+        
         <p>Não tem uma conta? <a href="{% url 'auth:cadastro' %}">Crie uma agora</a></p>
     </div>
 
     <footer>
-        <p>&copy; 2024 Gestão Escolar</p>
+        <p>&copy; 2024 FórumAcadêmico</p>
     </footer>
 </body>
 </html>

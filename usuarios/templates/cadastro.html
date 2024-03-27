@@ -57,10 +57,10 @@
                 <h2 class="mb-4">Cadastro</h2>
                 <form action="{% url 'auth:cadastro' %}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <input type="text" placeholder="Username..." name="username">
-                    <input type="email" placeholder="Email..." name="email">
-                    <input type="password" placeholder="Senha..." name="senha">
-                    <select name="qualificacao">
+                    <input type="text" placeholder="Username..." name="username" required>
+                    <input type="email" placeholder="Email..." name="email" required>
+                    <input type="password" placeholder="Senha..." name="senha" required>
+                    <select name="qualificacao" required>
                         <option value="" disabled selected>Nível de Qualificação</option>
                         <option value="Graduando">Graduando</option>
                         <option value="Mestrado">Mestrado</option>
